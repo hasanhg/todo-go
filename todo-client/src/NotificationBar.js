@@ -95,7 +95,7 @@ class NotificationBar extends React.Component {
 
     return (
       <div>
-        <Snackbar
+        <Snackbar id="notification_bar"
           anchorOrigin={{
             vertical: 'bottom',
             horizontal: 'left',

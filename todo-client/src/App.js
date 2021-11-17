@@ -12,23 +12,30 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: ["abc", "def"],
+      tasks: this.props.tasks ? this.props.tasks : [],
       adding: false,
       notification: {},
     }
+
+    this.mounted = false;
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.getTasks();
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   getTasks = async () => {
     const resp = await axios.get(`${process.env.REACT_APP_API_URL}/list`);
-    this.setState({ tasks: resp.data.tasks });
+    if (this.mounted) this.setState({ tasks: resp.data.tasks });
   }
 
   onCancel = () => {
-    this.setState({ adding: false });
+    if (this.mounted) this.setState({ adding: false });
   }
 
   onAdd = async (description) => {
@@ -38,14 +45,14 @@ class App extends React.Component {
       tasks.push(resp.data.task);
 
       const notification = { type: NotificationTypes.NOTIFY_SUCC, message: 'New task added' };
-      this.setState({ adding: false, tasks, notification });
+      if (this.mounted) this.setState({ adding: false, tasks, notification });
     }
     else this.handleErr(resp.data)
   }
 
   handleErr = (message) => {
     const notification = { type: NotificationTypes.NOTIFY_ERR, message };
-    this.setState({ notification });
+    if (this.mounted) this.setState({ notification });
   }
 
   render() {
