@@ -15,7 +15,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tasks: this.props.tasks ? this.props.tasks : [],
+      tasks: this.props.tasks,
       adding: false,
       notification: {},
     }
@@ -59,6 +59,7 @@ class App extends React.Component {
   }
 
   render() {
+    const tasks = this.state.tasks || [];
     return (
       <div className="app">
         <div className="list">
@@ -66,7 +67,7 @@ class App extends React.Component {
             To Do
           </Typography>
 
-          {this.state.tasks.map((task, i) => <Task task={task} key={i} />)}
+          {tasks.map((task, i) => <Task task={task} key={i} />)}
 
           {this.state.adding ? <Task adding={true} onAdd={this.onAdd} onCancel={this.onCancel} /> : null}
           <Button onClick={e => this.setState({ adding: true })} disabled={this.state.adding}>
