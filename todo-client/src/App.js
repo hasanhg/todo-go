@@ -9,7 +9,7 @@ import { NotificationTypes } from './const';
 import Client from './client';
 
 require('dotenv').config()
-const client = new Client();
+const client = new Client(null, null, process.env.NODE_ENV);
 
 class App extends React.Component {
   constructor(props) {
