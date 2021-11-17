@@ -31,8 +31,6 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: mv ./pact /usr/local/pact
-    - run: export PATH=$PATH:/usr/local/pact/bin
-    - run: chmod u+x ./build.sh
+    - run: mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh
     - run: ./build.sh
       shell: bash
