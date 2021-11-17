@@ -23,6 +23,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         entrypoint: /home/runner/work/todo-go/todo-go/todo-client
-    - run: cd todo-client
     - run: npm install
     - run: npm run test:pack
