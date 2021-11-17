@@ -19,15 +19,31 @@ class Task extends React.Component {
     return (
       <div style={{ textAlign: 'right' }}>
         <TextField
+          fullWidth
+          autoFocus
+          multiline
+          margin='none'
+          placeholder='Type your task description'
           value={this.state.description}
           onChange={e => this.setState({ description: e.target.value })}
-          fullWidth
-          margin='none'
-          multiline
+          onKeyDown={e => {
+            if (e.key === 'Escape') {
+              this.props.onCancel();
+            }
+            else if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              this.onAdd();
+            }
+          }}
         />
-        <Button variant='contained' color='primary' style={{ padding: 4, marginTop: 8 }} onClick={this.onAdd}>
-          Add
-        </Button>
+        <div style={{ marginTop: 8 }}>
+          <Button variant='contained' color='error' style={{ padding: 4, marginRight: 8, minWidth: 72 }} onClick={this.props.onCancel}>
+            Cancel
+          </Button>
+          <Button variant='contained' color='primary' style={{ padding: 4, minWidth: 72 }} onClick={this.onAdd}>
+            Add
+          </Button>
+        </div>
       </div>
     );
   }

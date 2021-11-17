@@ -27,6 +27,10 @@ class App extends React.Component {
     this.setState({ tasks: resp.data.tasks });
   }
 
+  onCancel = () => {
+    this.setState({ adding: false });
+  }
+
   onAdd = async (description) => {
     const resp = await axios.post(`${process.env.REACT_APP_API_URL}/create`, { description }, { validateStatus: (status) => { return true; } });
     if (resp.status === 200) {
@@ -52,9 +56,9 @@ class App extends React.Component {
             To Do
           </Typography>
 
-          {this.state.tasks.map(task => <Task task={task} />)}
+          {this.state.tasks.map((task, i) => <Task task={task} key={i} />)}
 
-          {this.state.adding ? <Task adding={true} onAdd={this.onAdd} /> : null}
+          {this.state.adding ? <Task adding={true} onAdd={this.onAdd} onCancel={this.onCancel} /> : null}
           <Button onClick={e => this.setState({ adding: true })} disabled={this.state.adding}>
             <SvgIcon fontSize='small' style={{ marginRight: 4 }}>
               <path d={mdiPlus} />
