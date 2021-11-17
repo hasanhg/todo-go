@@ -6,7 +6,10 @@ import './App.css';
 import axios from 'axios';
 import NotificationBar from './NotificationBar';
 import { NotificationTypes } from './const';
+import Client from './client';
+
 require('dotenv').config()
+const client = new Client();
 
 class App extends React.Component {
   constructor(props) {
@@ -30,7 +33,7 @@ class App extends React.Component {
   }
 
   getTasks = async () => {
-    const resp = await axios.get(`${process.env.REACT_APP_API_URL}/list`);
+    const resp = await client.listTasks();
     if (this.mounted) this.setState({ tasks: resp.data.tasks });
   }
 
@@ -39,7 +42,7 @@ class App extends React.Component {
   }
 
   onAdd = async (description) => {
-    const resp = await axios.post(`${process.env.REACT_APP_API_URL}/create`, { description }, { validateStatus: (status) => { return true; } });
+    const resp = await client.addTask(description);
     if (resp.status === 200) {
       const { tasks } = this.state;
       tasks.push(resp.data.task);
