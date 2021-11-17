@@ -18,6 +18,10 @@ func init() {
 }
 
 func main() {
+	startServer()
+}
+
+func startServer() {
 	initRedis()
 
 	e := echo.New()

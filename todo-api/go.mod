@@ -9,4 +9,5 @@ require (
 	github.com/labstack/echo/v4 v4.6.1
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.17.0 // indirect
+	github.com/pact-foundation/pact-go v1.6.6
 )
