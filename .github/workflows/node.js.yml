@@ -25,10 +25,9 @@ jobs:
        args: -O pact-1.88.80-linux-x86_64.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.80/pact-1.88.80-linux-x86_64.tar.gz
        
     - name: Unzip CLI tools
-      run: |
-       tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
-       mv ./pact /usr/local/pact
-       export PATH=$PATH:/usr/local/pact/bin
+    - run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
+    - run: mv ./pact /usr/local/pact
+    - run: export PATH=$PATH:/usr/local/pact/bin
        
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
