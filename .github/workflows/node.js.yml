@@ -22,6 +22,5 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-        entrypoint: /home/runner/work/todo-go/todo-go/todo-client
-    - run: npm install
-    - run: npm run test:pack
+    - run: ./build.sh
+      shell: bash
