@@ -1,0 +1,10 @@
+.task {
+    background-color: #fcfcfc;
+    border-radius: 4px;
+    padding: 8px;
+    width: '100%';
+    height: 'fit-content';
+    cursor: pointer;
+    user-select: none;
+    margin-bottom: 12px;
+}
