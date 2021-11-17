@@ -17,7 +17,7 @@ type CreateRequest struct {
 }
 
 type CreateResponse struct {
-	ID string `json:"id"`
+	Task *database.Task `json:"task"`
 }
 
 func Create(c echo.Context) error {
@@ -44,7 +44,7 @@ func Create(c echo.Context) error {
 	}
 
 	resp := &CreateResponse{
-		ID: t.ID,
+		Task: t,
 	}
 
 	return c.JSON(http.StatusOK, resp)

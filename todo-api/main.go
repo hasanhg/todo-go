@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
+	"todo-go/todo-api/auth"
 	"todo-go/todo-api/database"
 	"todo-go/todo-api/handler"
 )
@@ -22,6 +23,7 @@ func main() {
 	e := echo.New()
 	e.HideBanner = true
 	e.Use(middleware.Recover())
+	e.Use(auth.DynamicCors)
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: `{"time":"${time_rfc3339_nano}", "method":"${method}", "uri":"${uri}", "status":${status}, "took":"${latency_human}","bytes_in":${bytes_in},"bytes_out":${bytes_out}, "error":"${error}", "id":"${id}"}` + "\n",
 	}))
