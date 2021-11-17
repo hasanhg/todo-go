@@ -33,5 +33,5 @@ jobs:
       run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
        
     - name: Build
-      run: mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
+      run: sudo mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
       shell: bash
