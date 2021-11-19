@@ -49,4 +49,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
       
     - name: Build and push
-      run: ./build.sh
+      run: chmod u+x ./build.sh && ./build.sh
