@@ -3,7 +3,7 @@ import axios from "axios";
 class Client {
   constructor(url, port, env) {
     this.env = env;
-    this.apiURL = url && port ? `${url}:${port}` : process.env.REACT_APP_API_URL;
+    this.apiURL = url && port ? `${url}:${port}` : window.env.API_URL;
   }
 
   listTasks = () => {
