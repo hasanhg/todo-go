@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-#cd todo-client
-#npm install
+cd todo-client
+npm install
 #npm run test
 #npm run test:pact
 #cd ../todo-api
