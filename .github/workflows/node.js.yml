@@ -58,6 +58,9 @@ jobs:
         
     - name: Update deployment file
       run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|hasanhg/todo-api:'${TAG}'|' $GITHUB_WORKSPACE/todo-api/k8s/api-deployment.yaml
+        
+    - name: Less .yaml file
+      run: less $GITHUB_WORKSPACE/todo-api/k8s/api-deployment.yaml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-21-5-do-0-fra1-1637351826784
