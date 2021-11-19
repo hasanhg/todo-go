@@ -9,3 +9,6 @@ set -e
 
 cd todo-api
 make
+
+cd ../todo-client
+make
