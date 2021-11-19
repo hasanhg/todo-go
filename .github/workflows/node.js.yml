@@ -24,14 +24,29 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
       
-    - name: Get CLI Tools
-      uses: wei/wget@v1
+    #- name: Get CLI Tools
+    #  uses: wei/wget@v1
+    #  with:
+    #   args: -O pact-1.88.80-linux-x86_64.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.80/pact-1.88.80-linux-x86_64.tar.gz
+       
+    #- name: Unzip CLI tools
+    #  run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
+       
+    #- name: Build
+    #  run: sudo mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
+    #  shell: bash
+      
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
       with:
-       args: -O pact-1.88.80-linux-x86_64.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.80/pact-1.88.80-linux-x86_64.tar.gz
-       
-    - name: Unzip CLI tools
-      run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
-       
-    - name: Build
-      run: sudo mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
-      shell: bash
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      
+    - name: Build and push
+      run: ./build.sh
