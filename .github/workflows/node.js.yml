@@ -55,12 +55,15 @@ jobs:
       uses: digitalocean/action-doctl@v2
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+        
+    - name: Get tag
+      run: TAG=$(git rev-parse --short HEAD)
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-21-5-do-0-fra1-1637351826784
 
     - name: Deploy to DigitalOcean Kubernetes
-      run: kubectl set image deployment/todo-api todo-api=hasanhg/todo-api:${GITHUB_SHA}
+      run: kubectl set image deployment/todo-api todo-api=hasanhg/todo-api:${TAG}
 
     - name: Verify deployment
       run: kubectl rollout status deployment/todo-api
