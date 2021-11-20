@@ -9,7 +9,6 @@ import { NotificationTypes } from './const';
 import Client from './client';
 
 require('dotenv').config()
-const client = new Client();
 
 class App extends React.Component {
   constructor(props) {
@@ -21,6 +20,7 @@ class App extends React.Component {
     }
 
     this.mounted = false;
+    this.client = new Client(null, null, process.env.NODE_ENV);
   }
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class App extends React.Component {
   }
 
   getTasks = async () => {
-    const resp = await client.listTasks();
+    const resp = await this.client.listTasks();
     if (this.mounted) this.setState({ tasks: resp.data.tasks });
   }
 
@@ -42,7 +42,7 @@ class App extends React.Component {
   }
 
   onAdd = async (description) => {
-    const resp = await client.addTask(description);
+    const resp = await this.client.addTask(description);
     if (resp.status === 200) {
       const { tasks } = this.state;
       tasks.push(resp.data.task);

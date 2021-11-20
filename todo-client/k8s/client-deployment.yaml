@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-client
+  labels:
+    app: todo-client
+spec:
+  selector:
+    matchLabels:
+      app: todo-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: todo-client
+    spec:
+      containers:
+      - name: todo-client
+        image: hasanhg/todo-client:9cc2abc
+        ports:
+        - containerPort: 80
+          name: studio-http
+        env:
+          - name: API_URL
+            value: http://todogo.hopto.org/api
+

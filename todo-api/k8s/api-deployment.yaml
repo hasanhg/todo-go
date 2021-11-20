@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todo-api
+  labels:
+    app: todo-api
+spec:
+  selector:
+    matchLabels:
+      app: todo-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: todo-api
+    spec:
+      containers:
+      - name: todo-api
+        image: hasanhg/todo-api:9cc2abc
+        ports:
+        - containerPort: 80
+          name: api-http
+        env:
+          - name: REDIS_HOST
+            value: db-redis-fra1-44523-do-user-4219240-0.b.db.ondigitalocean.com
+          - name: REDIS_PORT
+            value: "25061"
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: redis-db
+          - name: REDIS_SCHEME
+            value: rediss

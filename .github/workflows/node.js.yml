@@ -1,0 +1,69 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ testing ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+      
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+      
+    - name: Login to DockerHub
+      uses: docker/login-action@v1 
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+      
+    - name: Get CLI Tools
+      uses: wei/wget@v1
+      with:
+       args: -O pact-1.88.80-linux-x86_64.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.80/pact-1.88.80-linux-x86_64.tar.gz
+       
+    - name: Unzip CLI tools
+      run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
+       
+    - name: Build and push
+      run: sudo mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
+      shell: bash
+
+    - name: Save DigitalOcean kubeconfig with short-lived credentials
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-21-5-do-0-fra1-1637351826784
+
+    - name: Deploy API to DigitalOcean Kubernetes
+      run: TAG=$(git rev-parse --short HEAD) && kubectl set image deployment/todo-api todo-api=hasanhg/todo-api:${TAG}
+
+    - name: Verify deployment
+      run: kubectl rollout status deployment/todo-api
+
+    - name: Deploy Client to DigitalOcean Kubernetes
+      run: TAG=$(git rev-parse --short HEAD) && kubectl set image deployment/todo-client todo-client=hasanhg/todo-client:${TAG}
+
+    - name: Verify deployment
+      run: kubectl rollout status deployment/todo-api
