@@ -41,20 +41,17 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
       
-    #- name: Get CLI Tools
-    #  uses: wei/wget@v1
-    #  with:
-    #   args: -O pact-1.88.80-linux-x86_64.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.80/pact-1.88.80-linux-x86_64.tar.gz
+    - name: Get CLI Tools
+      uses: wei/wget@v1
+      with:
+       args: -O pact-1.88.80-linux-x86_64.tar.gz https://github.com/pact-foundation/pact-ruby-standalone/releases/download/v1.88.80/pact-1.88.80-linux-x86_64.tar.gz
        
-    #- name: Unzip CLI tools
-    #  run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
+    - name: Unzip CLI tools
+      run: tar -xzvf pact-1.88.80-linux-x86_64.tar.gz
        
-    #- name: Build
-    #  run: sudo mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
-    #  shell: bash
-      
     - name: Build and push
-      run: chmod u+x ./build.sh && ./build.sh
+      run: sudo mv ./pact /usr/local/pact && export PATH=$PATH:/usr/local/pact/bin && chmod u+x ./build.sh && ./build.sh
+      shell: bash
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-21-5-do-0-fra1-1637351826784
