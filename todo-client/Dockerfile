@@ -3,7 +3,8 @@ WORKDIR /app
 ENV PUBLIC_URL /todo
 
 COPY . ./
-RUN ["yarn", "build:prod"]
+RUN ["npm", "install"]
+RUN ["npm", "run", "build:prod"]
 
 FROM nginx:alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
