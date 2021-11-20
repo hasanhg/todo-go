@@ -1,18 +1,22 @@
 import axios from "axios";
 
 class Client {
-  constructor(url, port) {
-    this.apiURL = url && port ? `${url}:${port}` : process.env.REACT_APP_API_URL;
+  constructor(url, port, env) {
+    this.env = env;
+    this.apiURL = url && port ? `${url}:${port}` : window.env.API_URL;
   }
 
   listTasks = () => {
-    if (process.env.NODE_ENV === 'test') return new Promise((resolve, reject) => resolve({ data: 'Test environment' }));
-    return axios.get(`${this.apiURL}/list`);
+    return this.fetch(`${this.apiURL}/list`, "GET")
   }
 
   addTask = (description) => {
-    if (process.env.NODE_ENV === 'test') return new Promise((resolve, reject) => resolve({ data: 'Test environment' }));
-    return axios.post(`${this.apiURL}/create`, { description }, { validateStatus: (status) => { return true; } });
+    return this.fetch(`${this.apiURL}/create`, "POST", { description })
+  }
+
+  fetch = (url, method, data) => {
+    if (this.env === 'test') return new Promise((resolve, reject) => resolve({ data: 'Test environment' }));
+    return axios.request({ url, method, data, validateStatus: (status) => true })
   }
 }
 

@@ -1,0 +1,8 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: api-svc
+  namespace: ingress-nginx
+spec:
+  type: ExternalName
+  externalName: todo-api.default.svc.cluster.local
