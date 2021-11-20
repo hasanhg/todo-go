@@ -5,14 +5,14 @@ describe('To Do Client', () => {
 
     const client = new Client('http://localhost', global.port);
 
-    describe('list()', () => {
+    describe('list and create', () => {
 
         beforeEach((done) => {
             const promises = [];
 
             promises.push(
                 global.provider.addInteraction({
-                    state: 'provider allows list to do tasks',
+                    state: 'list to do tasks',
                     uponReceiving: 'a GET request to list to do tasks',
                     withRequest: {
                         method: 'GET',
@@ -30,7 +30,7 @@ describe('To Do Client', () => {
 
             promises.push(
                 global.provider.addInteraction({
-                    state: 'provider allows to create task',
+                    state: 'create a task',
                     uponReceiving: 'a POST request to create a task',
                     withRequest: {
                         method: 'POST',
