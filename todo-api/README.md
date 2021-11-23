@@ -1,4 +1,3 @@
-<!-- GETTING STARTED -->
 ## Getting Started
 
 This is the back-end of To Do Go application. It is written in Go,
@@ -41,7 +40,7 @@ Below is the instructions how to prepare testing environment.
     * The server will listen on port 80 by default.
     
 ### Provider Test
-Assuming client driven pact files are stored at the path ``../todo-client/pacts``
+Assuming consumer driven pact files are stored at the path ``../todo-client/pacts``
 
 1. Change directory to API folder
     ```sh
