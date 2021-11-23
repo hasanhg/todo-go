@@ -32,8 +32,9 @@ func startServer() {
 		Format: `{"time":"${time_rfc3339_nano}", "method":"${method}", "uri":"${uri}", "status":${status}, "took":"${latency_human}","bytes_in":${bytes_in},"bytes_out":${bytes_out}, "error":"${error}", "id":"${id}"}` + "\n",
 	}))
 
-	e.GET("/list", handler.List)
-	e.POST("/create", handler.Create)
+	h := &handler.TaskHandler{}
+	e.GET("/list", h.List)
+	e.POST("/create", h.Create)
 
 	e.Logger.Fatal(e.Start(":80"))
 }
