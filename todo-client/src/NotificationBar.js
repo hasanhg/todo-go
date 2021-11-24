@@ -122,4 +122,8 @@ class NotificationBar extends React.Component {
   }
 }
 
+NotificationBar.defaultProps = {
+  notification: {},
+}
+
 export default withStyles(styles)(NotificationBar);
