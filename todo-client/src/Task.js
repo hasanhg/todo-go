@@ -6,7 +6,7 @@ class Task extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      description: '',
+      description: this.props.task.description,
     }
   }
 
@@ -17,7 +17,7 @@ class Task extends React.Component {
 
   renderAddField = () => {
     return (
-      <div style={{ textAlign: 'right' }}>
+      <div style={{ textAlign: 'right' }} id='task_container'>
         <TextField
           fullWidth
           autoFocus
@@ -55,6 +55,14 @@ class Task extends React.Component {
       </div>
     );
   }
+}
+
+
+Task.defaultProps = {
+  adding: false,
+  onAdd: () => { },
+  onCancel: () => { },
+  task: {},
 }
 
 export default Task;

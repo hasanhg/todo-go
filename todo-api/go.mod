@@ -10,4 +10,6 @@ require (
 	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/onsi/gomega v1.17.0 // indirect
 	github.com/pact-foundation/pact-go v1.6.6
+	github.com/stretchr/testify v1.7.0
+	github.com/tidwall/gjson v1.11.0
 )

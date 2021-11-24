@@ -18,7 +18,7 @@ type Task struct {
 	Description string    `json:"description"`
 }
 
-func (t *Task) preInsert() {
+func (t *Task) PreInsert() {
 	if t.ID == "" {
 		t.ID = uuid.New().String()
 	}
@@ -26,7 +26,7 @@ func (t *Task) preInsert() {
 }
 
 func (t *Task) Create() error {
-	t.preInsert()
+	t.PreInsert()
 
 	d, err := json.Marshal(t)
 	if err != nil {
