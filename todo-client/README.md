@@ -31,7 +31,7 @@ Below is the instructions how to prepare testing environment.
     ```
     
 ### Consumer Test
-You can generate pact files in order to use them on Provider Test.
+You can generate pact files in order to use them on Provider Test. Generated files will be stored at `pacts` folder by default.
 
 1. Change directory to Client folder
     ```sh
@@ -44,12 +44,12 @@ You can generate pact files in order to use them on Provider Test.
     ```
 
 ### Acceptance Test
-1. Change directory to API folder
+1. Change directory to Client folder
     ```sh
-    cd todo-go/todo-api
+    cd todo-go/todo-client
     ```
 
-2. Run unit tests
+2. Run acceptance tests
     ```sh
     npm run test
     ```
